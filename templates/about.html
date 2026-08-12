@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About &mdash; OVANCO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/">OVANCO</a>
+  <div class="nav-links">
+    {% if session.get('user') %}
+      <a href="/upload">Upload</a>
+      <a href="/logout" class="nav-muted">Logout</a>
+    {% else %}
+      <a href="/login" class="btn btn-sm">Login</a>
+    {% endif %}
+  </div>
+</nav>
+
+<div class="about-hero">
+  <h1>About OVANCO</h1>
+  <p>An AI-powered ovarian cancer screening platform built at the intersection of bioengineering, deep learning, and clinical need.</p>
+</div>
+
+<div class="about-body">
+
+  <div class="about-block">
+    <h3>The problem</h3>
+    <p>Ovarian cancer is one of the most lethal gynaecological cancers — largely because it is frequently diagnosed at advanced stages. Accurate interpretation of ultrasound imaging requires specialist expertise not always accessible in resource-limited settings. OVANCO bridges that gap with AI-assisted first-pass screening.</p>
+  </div>
+
+  <div class="about-block">
+    <h3>How it works</h3>
+    <p>OVANCO uses one deep learning model with GradCAM visualization on every uploaded ultrasound scan:</p>
+    <ul>
+      <li><strong>Classification model</strong> — EfficientNetB3 pretrained on ImageNet and fine-tuned on 1,469 clinically annotated ovarian ultrasound images (MMOTU dataset). Trained in two phases: head-only training followed by top-layer fine-tuning. Test accuracy: 76.68% · AUC: 0.905.</li>
+      <li><strong>GradCAM Visualization</strong> — Gradient-weighted Class Activation Mapping using GradientTape to compute gradient-based saliency maps, highlighting the specific image regions that drove the classification decision. Red/Orange = high attention; Blue = low attention.</li>
+    </ul>
+  </div>
+
+  <div class="about-block">
+    <h3>Model performance</h3>
+    <div class="perf-table">
+      <div class="perf-row header">
+        <span>Class</span><span>Precision</span><span>Recall</span><span>F1</span>
+      </div>
+      <div class="perf-row"><span>Normal</span><span>65%</span><span>73%</span><span>0.69</span></div>
+      <div class="perf-row"><span>Benign</span><span>82%</span><span>80%</span><span>0.81</span></div>
+      <div class="perf-row"><span>Malignant</span><span>73%</span><span>69%</span><span>0.71</span></div>
+      <div class="perf-row total"><span>Overall</span><span colspan="2">76.68% accuracy</span><span>AUC 0.91</span></div>
+    </div>
+  </div>
+
+  <div class="about-block">
+    <h3>Dataset</h3>
+    <p>Trained on the <strong>MMOTU (Multi-Modality Ovarian Tumor Ultrasound)</strong> dataset — 1,469 clinically annotated 2D ultrasound images from Beijing Shijitan Hospital, Capital Medical University, annotated by 27 gynaecology experts. Published: Zhao et al., IEEE 2022.</p>
+  </div>
+
+  <div class="about-block">
+    <h3>Technology</h3>
+    <div class="tech-pills">
+      <span>Python</span><span>TensorFlow</span><span>EfficientNetB3</span>
+      <span>Flask</span><span>OpenCV</span><span>GradientTape</span>
+      <span>MMOTU Dataset</span><span>Transfer Learning</span>
+    </div>
+  </div>
+
+  <div class="about-block">
+    <h3>Built by</h3>
+    <div class="author-card">
+      <div class="author-av">&#128105;&#8205;&#128300;</div>
+      <div class="author-info">
+        <h4>Aryaa Deshmukh</h4>
+        <p>B.Tech Bioengineering (Bioinformatics &amp; Data Analytics)<br>
+        
+        
+        </p>
+        <div class="author-links">
+          <a href="https://linkedin.com/in/aryaa-deshmukh-ad27" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-disclaimer">
+    <strong>&#9888; Medical disclaimer</strong><br>
+    OVANCO is an educational and research prototype. It is <strong>not approved for clinical use</strong>
+    and must not be used as the sole basis for any medical decision. Always consult a qualified
+    gynaecologist or oncologist for diagnosis and treatment.
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>OVANCO &middot; Aryaa Deshmukh &middot; </p>
+  </div>
+</footer>
+</body>
+</html>

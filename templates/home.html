@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OVANCO — AI Ovarian Cancer Screening</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/">OVANCO</a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="/about">About</a>
+    {% if session.get('user') %}
+      <a href="/upload" class="btn btn-sm">Upload Scan</a>
+      <a href="/logout" class="nav-muted">Logout</a>
+    {% else %}
+      <a href="/login" class="btn btn-sm">Get Started</a>
+    {% endif %}
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Clinically-validated AI &middot; MMOTU Dataset &middot; EfficientNetB3</div>
+    <h1>Ovarian Cancer Screening</h1>
+    <p class="hero-sub">Upload an ultrasound scan and receive instant AI classification — Normal, Benign, or Malignant — with region-highlighted GradCAM heatmaps your clinician can act on.</p>
+    <div class="hero-actions">
+      <a href="/login" class="btn btn-primary btn-lg">Upload a scan</a>
+      <a href="#how" class="btn btn-outline btn-lg">See how it works</a>
+    </div>
+    <div class="hero-metrics">
+      <div class="metric"><span class="metric-num">77%</span><span class="metric-label">Test accuracy</span></div>
+      <div class="metric-div"></div>
+      <div class="metric"><span class="metric-num">0.91</span><span class="metric-label">AUC score</span></div>
+      <div class="metric-div"></div>
+      <div class="metric"><span class="metric-num">1,469</span><span class="metric-label">Clinical images</span></div>
+      <div class="metric-div"></div>
+      <div class="metric"><span class="metric-num">3</span><span class="metric-label">Diagnostic classes</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="eyebrow">Process</div>
+    <h2>From scan to insight in seconds</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <h3>Upload your scan</h3>
+        <p>Drop in any JPG or PNG ovarian ultrasound image. Session-based secure upload.</p>
+      </div>
+      <div class="step-arrow">&#8594;</div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <h3>AI analysis</h3>
+        <p>EfficientNetB3 classifies the scan. A gradient GradCAM heatmap marks regions of interest.</p>
+      </div>
+      <div class="step-arrow">&#8594;</div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <h3>Act on results</h3>
+        <p>Review the class, confidence score, probability breakdown, and highlighted scan regions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="classes-section">
+  <div class="section-inner">
+    <div class="eyebrow">Classification</div>
+    <h2>Three classes. Clear output.</h2>
+    <div class="classes-row">
+      <div class="class-card low">
+        <div class="class-icon">&#9675;</div>
+        <h3>Normal</h3>
+        <p>No signs of ovarian abnormality detected. Routine monitoring as clinically advised.</p>
+        <span class="risk-tag low">Low risk</span>
+      </div>
+      <div class="class-card moderate">
+        <div class="class-icon">&#9685;</div>
+        <h3>Benign</h3>
+        <p>Non-cancerous findings — cysts, cystadenomas, teratomas. Clinical follow-up recommended.</p>
+        <span class="risk-tag moderate">Moderate risk</span>
+      </div>
+      <div class="class-card high">
+        <div class="class-icon">&#9679;</div>
+        <h3>Malignant</h3>
+        <p>Findings consistent with malignancy. Immediate specialist referral required.</p>
+        <span class="risk-tag high">High risk</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer-strip">
+  &#9888; OVANCO is an AI-assisted research tool &mdash; not a substitute for professional medical diagnosis. Always consult a qualified clinician.
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">OVANCO</div>
+    <p>Built by <strong>Aryaa Deshmukh</strong></p>
+    <p class="footer-cite">Trained on MMOTU &middot; Beijing Shijitan Hospital, Capital Medical University &middot; Zhao et al. IEEE 2022</p>
+    <div class="footer-links">
+      <a href="/about">About</a>
+      <a href="/login">Login</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

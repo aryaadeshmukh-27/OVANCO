@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results &mdash; OVANCO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/">OVANCO</a>
+  <div class="nav-links">
+    <a href="/upload">New Scan</a>
+    <a href="/about">About</a>
+    <a href="/logout" class="nav-muted">Logout</a>
+  </div>
+</nav>
+
+<div class="page-wrap results-wrap">
+  <div class="results-head">
+    <div>
+      <h2>Analysis Results</h2>
+      <p class="results-sub">AI-assisted ovarian scan classification</p>
+    </div>
+    <a href="/upload" class="btn btn-outline btn-sm">+ New scan</a>
+  </div>
+
+  {% if result.error %}
+    <div class="alert alert-error">
+      <strong>Error:</strong> {{ result.error }}
+      {% if not result.models_loaded %}
+        <br><small>Place model .h5 files in the <code>models/</code> folder and restart.</small>
+      {% endif %}
+    </div>
+    <div style="text-align:center;margin-top:1.5rem">
+      <a href="/upload" class="btn btn-primary">Try again</a>
+    </div>
+
+  {% else %}
+
+    <!-- Scan images -->
+    <div class="scans-grid">
+      <div class="scan-card">
+        <div class="scan-card-label">Original Scan</div>
+        <img src="/uploads/{{ filename }}" alt="Uploaded scan">
+      </div>
+      <div class="scan-card">
+        <div class="scan-card-label">GradCAM Heatmap</div>
+        {% if result.gradcam_filename %}
+          <img src="/uploads/{{ result.gradcam_filename }}" alt="GradCAM">
+          <div class="gradcam-legend" style="padding:.625rem 1.25rem;font-size:.72rem;color:var(--text-2);display:flex;gap:1rem;border-top:1px solid var(--border);">
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#E74C3C;margin-right:5px;vertical-align:middle;"></span>Red/Orange = High attention</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2980B9;margin-right:5px;vertical-align:middle;"></span>Blue = Low attention</span>
+          </div>
+        {% else %}
+          <div class="no-saliency">GradCAM unavailable</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Prediction -->
+    <div class="pred-card risk-{{ result.risk_level }}">
+      <div class="pred-top">
+        <div>
+          <div class="pred-eyebrow">Predicted classification</div>
+          <div class="pred-name">{{ result.predicted_class }}</div>
+        </div>
+        <span class="risk-pill risk-{{ result.risk_level }}">{{ result.risk_level|upper }} RISK</span>
+      </div>
+
+      <div class="pred-body">
+        <div class="conf-row">
+          <span>Confidence</span>
+          <strong>{{ result.confidence }}%</strong>
+        </div>
+        <div class="conf-bar">
+          <div class="conf-fill" style="width:{{ result.confidence }}%"></div>
+        </div>
+
+        {% if result.all_probs %}
+        <div class="prob-breakdown">
+          {% for cls, prob in result.all_probs.items() %}
+          <div class="prob-row">
+            <span class="prob-label">{{ cls }}</span>
+            <div class="prob-bar-wrap">
+              <div class="prob-bar" style="width:{{ prob }}%"></div>
+            </div>
+            <span class="prob-val">{{ prob }}%</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <p class="pred-desc">{{ result.description }}</p>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="result-disclaimer">
+      <strong>&#9888; Important medical notice</strong><br>
+      This result is AI-generated and is <strong>not a clinical diagnosis.</strong>
+      Use as a preliminary screening aid only. Consult a qualified gynaecologist
+      or oncologist before making any medical decisions.
+    </div>
+
+    <div class="result-actions">
+      <a href="/upload" class="btn btn-primary">Analyse another scan</a>
+      <a href="/about" class="btn btn-outline">About OVANCO</a>
+    </div>
+
+  {% endif %}
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>OVANCO &middot; Aryaa Deshmukh &middot; </p>
+  </div>
+</footer>
+</body>
+</html>

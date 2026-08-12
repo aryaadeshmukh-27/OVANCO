@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login &mdash; OVANCO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="auth-body">
+<nav class="nav">
+  <a class="nav-logo" href="/">OVANCO</a>
+</nav>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-top">
+      <div class="auth-icon">&#128300;</div>
+      <h2>Welcome back</h2>
+      <p>Log in to upload and analyse ovarian scans</p>
+    </div>
+    <div class="auth-form">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for cat, msg in messages %}
+          <div class="alert alert-{{ cat }}">{{ msg }}</div>
+        {% endfor %}
+      {% endwith %}
+      <form method="POST" action="/login">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Log In</button>
+      </form>
+      <div class="demo-note">
+        <strong>Demo credentials</strong><br>
+        Doctor &nbsp;&#8594;&nbsp; doctor@ovanco.com &nbsp;/&nbsp; doctor123<br>
+        Patient &#8594;&nbsp; patient@ovanco.com &nbsp;/&nbsp; patient123
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer-strip">
+  &#9888; OVANCO is for educational and research purposes only &mdash; not a substitute for clinical diagnosis.
+</div>
+</body>
+</html>
